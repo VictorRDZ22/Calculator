@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #FFD700; /* Warm background color */
+    }
+    .calculator {
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      background-color: #FFF;
+      text-align: center;
+      width: 300px;
+      padding: 20px;
+    }
+    .display {
+      font-size: 24px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+    .history {
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: left;
+      max-height: 80px;
+      overflow: auto;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 4px;
+      background-color: #F8F8F8; /* Light gray background */
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 20px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      background-color: #F0F0F0; /* Light button color */
+    }
+    button:hover {
+      background-color: #E0E0E0; /* Slightly darker color on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h1>Calculator</h1> <!-- Eye-catching title -->
+    <div class="display" id="display">0</div>
+    <div class="history" id="history"></div>
+    <div class="buttons">
+      <button onclick="appendToDisplay('7')">7</button>
+      <button onclick="appendToDisplay('8')">8</button>
+      <button onclick="appendToDisplay('9')">9</button>
+      <button onclick="appendToDisplay('/')">÷</button>
+      <button onclick="appendToDisplay('4')">4</button>
+      <button onclick="appendToDisplay('5')">5</button>
+      <button onclick="appendToDisplay('6')">6</button>
+      <button onclick="appendToDisplay('*')">x</button>
+      <button onclick="appendToDisplay('1')">1</button>
+      <button onclick="appendToDisplay('2')">2</button>
+      <button onclick="appendToDisplay('3')">3</button>
+      <button onclick="appendToDisplay('-')">-</button>
+      <button onclick="appendToDisplay('0')">0</button>
+      <button onclick="appendToDisplay('.')">.</button>
+      <button onclick="clearDisplay()">C</button> <!-- Clear button -->
+      <button onclick="calculate()">=</button>
+      <button onclick="appendToDisplay('+')">+</button>
+    </div>
+  </div>
+
+  <script>
+    let currentDisplay = '0';
+    let currentOperation = '';
+    let lastOperation = ''; // To track the last operation for comparison
+    let history = '';
+
+    function updateDisplay() {
+      const displayElement = document.getElementById('display');
+      displayElement.innerText = currentDisplay;
+    }
+
+    function appendToDisplay(value) {
+      if (currentDisplay === '0') {
+        currentDisplay = value;
+      } else {
+        currentDisplay += value;
+      }
+      currentOperation += value;
+      updateDisplay();
+    }
+
+    function clearDisplay() {
+      currentDisplay = '0';
+      currentOperation = '';
+      updateDisplay();
+    }
+
+    function calculate() {
+      try {
+        const result = eval(currentDisplay);
+        currentDisplay = result.toString();
+        updateDisplay();
+        if (currentOperation !== lastOperation) { // Check if the operation is different from the last one
+          history += `Math Operation: ${currentOperation}\nResults: ${result}\n\n`;
+        }
+        updateHistory();
+        lastOperation = currentOperation; // Update the last operation
+        currentOperation = '';
+      } catch (error) {
+        currentDisplay = 'Error';
+        updateDisplay();
+      }
+    }
+
+    function updateHistory() {
+      const historyElement = document.getElementById('history');
+      historyElement.innerText = history;
+    }
+
+    document.addEventListener('keydown', (event) => {
+      const key = event.key;
+
+      if (/[0-9./*\-+]/.test(key)) {
+        appendToDisplay(key);
+      } else if (key === 'Enter') {
+        calculate();
+      }
+    });
+  </script>
+</body>
+</html>
