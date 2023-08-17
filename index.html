@@ -12,7 +12,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #FFD700; /* Warm background color */
+      background-color: #FFD700;
     }
     .calculator {
       border: 2px solid #ccc;
@@ -37,7 +37,7 @@
       border: 1px solid #ccc;
       padding: 5px;
       border-radius: 4px;
-      background-color: #F8F8F8; /* Light gray background */
+      background-color: #F8F8F8; 
     }
     .buttons {
       display: grid;
@@ -51,16 +51,16 @@
       border: 1px solid #ccc;
       cursor: pointer;
       transition: background-color 0.2s;
-      background-color: #F0F0F0; /* Light button color */
+      background-color: #F0F0F0;
     }
     button:hover {
-      background-color: #E0E0E0; /* Slightly darker color on hover */
+      background-color: #E0E0E0;
     }
   </style>
 </head>
 <body>
   <div class="calculator">
-    <h1>Calculator</h1> <!-- Eye-catching title -->
+    <h1>Calculator</h1> 
     <div class="display" id="display">0</div>
     <div class="history" id="history"></div>
     <div class="buttons">
@@ -78,7 +78,7 @@
       <button onclick="appendToDisplay('-')">-</button>
       <button onclick="appendToDisplay('0')">0</button>
       <button onclick="appendToDisplay('.')">.</button>
-      <button onclick="clearDisplay()">C</button> <!-- Clear button -->
+      <button onclick="clearDisplay()">C</button> 
       <button onclick="calculate()">=</button>
       <button onclick="appendToDisplay('+')">+</button>
     </div>
@@ -116,11 +116,11 @@
         const result = eval(currentDisplay);
         currentDisplay = result.toString();
         updateDisplay();
-        if (currentOperation !== lastOperation) { // Check if the operation is different from the last one
+        if (currentOperation !== lastOperation) { 
           history += `Math Operation: ${currentOperation}\nResults: ${result}\n\n`;
         }
         updateHistory();
-        lastOperation = currentOperation; // Update the last operation
+        lastOperation = currentOperation; 
         currentOperation = '';
       } catch (error) {
         currentDisplay = 'Error';
